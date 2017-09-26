@@ -1,0 +1,19 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="fechaGasto">Fecha</label>
+    <input type="date" class="form-control" id="fechaGasto" required [(ngModel)]="model.fecha" name="fecha">
+  </div>
+  <div class="form-group">
+    <label for="rubroGasto">Rubro</label>
+    <input type="text" class="form-control" id="rubroGasto" required [(ngModel)]="model.rubro" name="rubro">
+  </div>
+  <div>
+    <label for="montoGasto">Monto</label>
+    <input type="number" class="form-control" id="montoGasto" required [(ngModel)]="model.monto" name="monto">
+  </div>
+  <div>
+    <label for="notasGasto">Notas</label>
+    <input type="text" class="form-control" id="notasGasto" [(ngModel)]="model.notas" name="notas">
+  </div>
+  <button type="submit" class="btn btn-success">Crear</button>
+</form>

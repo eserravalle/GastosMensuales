@@ -1,16 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'
 
 import { AppComponent } from './app.component';
+import { NuevoGastoComponent } from './nuevo-gasto/nuevo-gasto.component';
+
+import { GastoRepositoryService } from './services/gasto-repository.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NuevoGastoComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    GastoRepositoryService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
