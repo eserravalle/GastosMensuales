@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { GastoRepositoryService } from './services/gasto-repository.service';
 import { LoginService } from './services/login.service';
 import { RubroService } from './services/rubro.service';
+import { DateFormatService } from './services/date-format.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { RubroService } from './services/rubro.service';
   providers: [
     GastoRepositoryService,
     LoginService,
-    RubroService
+    RubroService,
+    DateFormatService
   ],
   bootstrap: [AppComponent]
 })

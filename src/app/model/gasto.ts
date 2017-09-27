@@ -1,7 +1,7 @@
 export class Gasto {
     
     constructor(
-        public fecha: Date,
+        public fecha: string,
         public rubro: string,
         public monto: number,
         public notas: string

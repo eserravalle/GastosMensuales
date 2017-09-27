@@ -3,6 +3,7 @@ import { Gasto } from '../model/gasto';
 import { GastoRepositoryService } from '../services/gasto-repository.service';
 import { RubroService } from '../services/rubro.service';
 import { LoginService } from '../services/login.service';
+import { DateFormatService } from '../services/date-format.service';
 
 @Component({
   selector: 'app-nuevo-gasto',
@@ -15,8 +16,13 @@ export class NuevoGastoComponent implements OnInit {
   rubros: Array<string>;
   crearButtonEnabled: boolean;
 
-  constructor(private gastoRepository: GastoRepositoryService, private rubroService: RubroService, private loginService: LoginService) {
-    this.model = new Gasto(new Date(2017,8,20), "", 10, "");
+  constructor(
+    private gastoRepository: GastoRepositoryService,
+    private rubroService: RubroService,
+    private loginService: LoginService,
+    private dateFormatService: DateFormatService) {
+
+    this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "");
     this.rubros = this.rubroService.getAllRubros();
     this.crearButtonEnabled = false;
   }
