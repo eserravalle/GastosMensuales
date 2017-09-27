@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" #nuevoGastoForm="ngForm">
   <div class="form-group">
     <label for="fechaGasto">Fecha</label>
     <input type="date" class="form-control" id="fechaGasto" required [(ngModel)]="model.fecha" name="fecha">
@@ -17,5 +17,5 @@
     <label for="notasGasto">Notas</label>
     <input type="text" class="form-control" id="notasGasto" [(ngModel)]="model.notas" name="notas">
   </div>
-  <button type="submit" class="btn btn-success">Crear</button>
+  <button type="submit" class="btn btn-success" [disabled]="!nuevoGastoForm.form.valid||!crearButtonEnabled">Crear</button>
 </form>
