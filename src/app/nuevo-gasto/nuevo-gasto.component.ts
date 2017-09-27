@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Gasto } from '../model/gasto';
 import { GastoRepositoryService } from '../services/gasto-repository.service';
+import { RubroService } from '../services/rubro.service';
 
 @Component({
   selector: 'app-nuevo-gasto',
@@ -10,11 +11,13 @@ import { GastoRepositoryService } from '../services/gasto-repository.service';
 export class NuevoGastoComponent implements OnInit {
 
   model: Gasto;
+  rubros: Array<string>;
 
-  constructor(private gastoRepository: GastoRepositoryService) { }
+  constructor(private gastoRepository: GastoRepositoryService, private rubroService: RubroService) { }
 
   ngOnInit() {
     this.model = new Gasto(new Date(), "", 0, "");
+    this.rubros = this.rubroService.getAllRubros();
   }
 
   onSubmit() {

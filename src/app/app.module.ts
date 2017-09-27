@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 
 import { GastoRepositoryService } from './services/gasto-repository.service';
 import { LoginService } from './services/login.service';
+import { RubroService } from './services/rubro.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LoginService } from './services/login.service';
   ],
   providers: [
     GastoRepositoryService,
-    LoginService
+    LoginService,
+    RubroService
   ],
   bootstrap: [AppComponent]
 })
