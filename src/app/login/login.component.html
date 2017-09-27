@@ -1,0 +1,6 @@
+<div>
+  <input type="text" [(ngModel)]="username">
+  <input type="password"[(ngModel)]="password">
+  <button (click)="onLoginClick()" *ngIf="!userLoggedIn">Log In</button>
+  <button (click)="onLogoutClick()" *ngIf="userLoggedIn">Log Out</button>
+</div>
