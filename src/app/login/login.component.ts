@@ -19,15 +19,16 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loginService.loggedIn.subscribe((value) => {
+      this.userLoggedIn = value;
+    });
   }
 
   onLoginClick() {
     this.loginService.login(this.username, this.password);
-    this.userLoggedIn = this.loginService.verifyUser(this.username);
   }
 
   onLogoutClick() {
     this.loginService.logout();
-    this.userLoggedIn = this.loginService.verifyUser(this.username);
   }
 }
