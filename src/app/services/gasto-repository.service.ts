@@ -9,7 +9,7 @@ export class GastoRepositoryService {
 
   async agregarGasto(gasto: Gasto): Promise<boolean> {
     try {
-      let dbRef = firebase.database().ref('gastos/');
+      let dbRef = firebase.database().ref('gastos/' + gasto.fecha.substr(0, 7));
       let newPost = dbRef.push();
 
       await newPost.set({
