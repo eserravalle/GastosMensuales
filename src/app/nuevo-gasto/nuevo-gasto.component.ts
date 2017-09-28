@@ -33,7 +33,10 @@ export class NuevoGastoComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    this.gastoRepository.agregarGasto(this.model);
+  async onSubmit() {
+    let resultado: boolean = await this.gastoRepository.agregarGasto(this.model);
+    if (resultado === true) {
+      this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "");
+    }
   }
 }
