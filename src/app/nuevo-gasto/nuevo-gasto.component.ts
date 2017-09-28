@@ -15,6 +15,8 @@ export class NuevoGastoComponent implements OnInit {
   model: Gasto;
   rubros: Array<string>;
   crearButtonEnabled: boolean;
+  mesActual: string;
+  totalDelMesActual: string;
 
   constructor(
     private gastoRepository: GastoRepositoryService,
@@ -31,11 +33,16 @@ export class NuevoGastoComponent implements OnInit {
     this.loginService.loggedIn.subscribe((value) => {
       this.crearButtonEnabled = value;
     });
+    this.gastoRepository.montoTotalListo.subscribe((value) => {
+      this.totalDelMesActual = value.toString();
+    });
   }
 
   async onSubmit() {
     let resultado: boolean = await this.gastoRepository.agregarGasto(this.model);
     if (resultado === true) {
+      this.mesActual = this.model.fecha.substr(0, 7);
+      this.gastoRepository.calcularGastoTotalDelMes(this.mesActual);
       this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "");
     }
   }

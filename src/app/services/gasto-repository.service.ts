@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Gasto } from '../model/gasto';
 import * as firebase from 'firebase';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class GastoRepositoryService {
 
-  constructor() {  }
+  montoTotalListo = new BehaviorSubject<number>(0);
+
+  constructor() {
+    this.montoTotalListo.next(0);
+  }
 
   async agregarGasto(gasto: Gasto): Promise<boolean> {
     try {
@@ -26,5 +31,25 @@ export class GastoRepositoryService {
       alert(`${error.message} No ha podido crear el Gasto. ¡Intente nuevamente!`)
       return false;
     }
+  }
+
+  calcularGastoTotalDelMes(mes: string) {
+    let dbRef = firebase.database().ref('gastos/' + mes);
+    let query = dbRef.orderByKey();
+    query.once(
+      'value',
+      function(snapshot) {
+        let montoTotal: number = 0;
+        snapshot.forEach(function(childSnapshot) {
+          montoTotal = montoTotal + childSnapshot.val().monto;
+          return false; // This means: keep iterating!
+        });
+        this.montoTotalListo.next(montoTotal);
+      },
+      function(error) {
+        this.montoTotalListo.next(0);
+      },
+      this
+    );
   }
 }
