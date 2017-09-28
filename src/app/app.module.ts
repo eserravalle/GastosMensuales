@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { AlertModule } from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NuevoGastoComponent } from './nuevo-gasto/nuevo-gasto.component';
@@ -19,7 +20,8 @@ import { DateFormatService } from './services/date-format.service';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AlertModule.forRoot()
   ],
   providers: [
     GastoRepositoryService,
