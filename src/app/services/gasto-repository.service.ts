@@ -56,7 +56,7 @@ export class GastoRepositoryService {
 
   async obtenerGastosDelMes(mes: string): Promise<Array<Gasto>> {
     let dbRef = firebase.database().ref('gastos/' + mes);
-    let query = dbRef.orderByKey();
+    let query = dbRef.orderByChild('fecha');
     await query.once(
       'value',
       function(snapshot) {
