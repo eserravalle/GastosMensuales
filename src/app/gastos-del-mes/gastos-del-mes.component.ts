@@ -11,12 +11,14 @@ import { LoginService } from '../services/login.service';
 export class GastosDelMesComponent implements OnInit {
 
   gastosDelMes: Array<Gasto>;
+  totalDeGastosDelMes: number;
   meses: Array<string>;
   mes: string;
   consultarButtonEnabled: boolean;
 
   constructor(private gastoRepositoryService: GastoRepositoryService, private loginService: LoginService) {
     this.gastosDelMes = new Array<Gasto>();
+    this.totalDeGastosDelMes = 0;
     this.meses = ['2017-08', '2017-09'];
     this.mes = '2017-09';
     this.consultarButtonEnabled = false;
@@ -30,7 +32,14 @@ export class GastosDelMesComponent implements OnInit {
 
   consultarGastosDelMes() {
     this.gastoRepositoryService.obtenerGastosDelMes(this.mes)
-    .then((gastos) => this.gastosDelMes = gastos)
+    .then((gastos) => {
+      this.gastosDelMes = gastos;
+      let sumaDeGastosDelMes = 0;
+      this.gastosDelMes.forEach(gasto => {
+        sumaDeGastosDelMes = sumaDeGastosDelMes + gasto.monto;
+      });
+      this.totalDeGastosDelMes = sumaDeGastosDelMes;
+    })
     .catch((error) => alert(`${error.message} No se han podido recuperar los Gastos del Mes. ¡Intente nuevamente!`));
   }
 }
