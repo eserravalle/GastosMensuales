@@ -1,3 +1,16 @@
+<h3>Seleccione un mes: </h3>
+<div class="row">
+  <div class="col-xs-6 col-md-3">
+    <div class="form-group">
+      <select class="form-control" id="mesAConsultar" [(ngModel)]="mes" name="mes">
+        <option *ngFor="let mes of meses" [value]="mes">{{mes}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-xs-6 col-md-3">
+    <button class="btn" (click)="consultarGastosDelMes()" [disabled]="!consultarButtonEnabled">Consultar</button>
+  </div>
+</div>
 <div class="row">
   <div class="col-xs-12 col-md-6">
     <ul>
