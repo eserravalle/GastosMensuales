@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class GastoRepositoryService {
 
   montoTotalListo = new BehaviorSubject<number>(0);
+  listaDeGastosDelMes = new Array<Gasto>();
 
   constructor() {
     this.montoTotalListo.next(0);
@@ -51,5 +52,32 @@ export class GastoRepositoryService {
       },
       this
     );
+  }
+
+  async obtenerGastosDelMes(mes: string): Promise<Array<Gasto>> {
+    let dbRef = firebase.database().ref('gastos/' + mes);
+    let query = dbRef.orderByKey();
+    await query.once(
+      'value',
+      function(snapshot) {
+        let gastos: Array<Gasto> = new Array<Gasto>();
+        snapshot.forEach(function(childSnapshot) {
+          let gasto: Gasto = new Gasto(
+            childSnapshot.val().fecha,
+            childSnapshot.val().rubro,
+            childSnapshot.val().monto,
+            childSnapshot.val().notas
+          );
+          gastos.push(gasto);
+          return false; // This means: keep iterating!
+        });
+        this.listaDeGastosDelMes = gastos;
+      },
+      function(error) {
+        this.listaDeGastosDelMes = new Array<Gasto>();
+      },
+      this
+    );
+    return this.listaDeGastosDelMes;
   }
 }

@@ -2,5 +2,10 @@
   <app-login></app-login>
 </div>
 <div class="container">
-  <app-nuevo-gasto></app-nuevo-gasto>
+  <h1>{{title}}</h1>
+  <nav>
+    <a routerLink="/nuevoGasto" routerLinkActive="active" class="btn">Nuevo Gasto</a>
+    <a routerLink="/gastosDelMes" routerLinkActive="active">Gastos del Mes</a>
+  </nav>
+  <router-outlet></router-outlet>
 </div>
