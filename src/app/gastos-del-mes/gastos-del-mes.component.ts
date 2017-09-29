@@ -18,6 +18,6 @@ export class GastosDelMesComponent implements OnInit {
   ngOnInit() {
     this.gastoRepositoryService.obtenerGastosDelMes('2017-09')
     .then((gastos) => this.gastosDelMes = gastos)
-    .catch((error) => alert(`${error.message} No han podido recuperar los Gastos del Mes. ¡Intente nuevamente!`));
+    .catch((error) => alert(`${error.message} No se han podido recuperar los Gastos del Mes. ¡Intente nuevamente!`));
   }
 }
