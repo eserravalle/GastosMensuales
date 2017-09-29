@@ -13,14 +13,20 @@
 </div>
 <div class="row">
   <div class="col-xs-12 col-md-6">
-    <ul>
-      <li *ngFor="let gasto of gastosDelMes">
-        <span>{{gasto.fecha}}</span>
-        <span>{{gasto.rubro}}</span>
-        <span>{{gasto.monto}}</span>
-        <span>{{gasto.notas}}</span>
-      </li>
-    </ul>
+    <table class="table table-striped">
+      <tr>
+        <th>Fecha</th>
+        <th>Rubro</th>
+        <th>Monto</th>
+        <th>Notas</th>
+      </tr>
+      <tr *ngFor="let gasto of gastosDelMes">
+        <td>{{gasto.fecha}}</td>
+        <td>{{gasto.rubro}}</td>
+        <td>{{gasto.monto}}</td>
+        <td>{{gasto.notas}}</td>
+      </tr>
+    </table>
   </div>
 </div>
 <div class="row">

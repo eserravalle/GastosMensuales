@@ -53,3 +53,4 @@ Thumbs.db
 /public/vendor.bundle.js
 /public/vendor.bundle.js.map
 /public
+/*.log
