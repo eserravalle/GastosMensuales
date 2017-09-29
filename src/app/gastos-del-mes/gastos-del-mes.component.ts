@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Gasto } from '../model/gasto';
 import { GastoRepositoryService } from '../services/gasto-repository.service';
 import { LoginService } from '../services/login.service';
+import { MesService } from '../services/mes.service';
 
 @Component({
   selector: 'app-gastos-del-mes',
@@ -16,11 +17,9 @@ export class GastosDelMesComponent implements OnInit {
   mes: string;
   consultarButtonEnabled: boolean;
 
-  constructor(private gastoRepositoryService: GastoRepositoryService, private loginService: LoginService) {
+  constructor(private gastoRepositoryService: GastoRepositoryService, private loginService: LoginService, private mesService: MesService) {
     this.gastosDelMes = new Array<Gasto>();
     this.totalDeGastosDelMes = 0;
-    this.meses = ['2017-08', '2017-09'];
-    this.mes = '2017-09';
     this.consultarButtonEnabled = false;
   }
 
@@ -28,6 +27,8 @@ export class GastosDelMesComponent implements OnInit {
     this.loginService.loggedIn.subscribe((value) => {
       this.consultarButtonEnabled = value;
     });
+    this.meses = this.mesService.obtenerListaDeMeses();
+    this.mes = this.meses[0];
   }
 
   consultarGastosDelMes() {

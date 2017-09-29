@@ -7,12 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NuevoGastoComponent } from './nuevo-gasto/nuevo-gasto.component';
 import { LoginComponent } from './login/login.component';
+import { GastosDelMesComponent } from './gastos-del-mes/gastos-del-mes.component';
 
 import { GastoRepositoryService } from './services/gasto-repository.service';
 import { LoginService } from './services/login.service';
 import { RubroService } from './services/rubro.service';
 import { DateFormatService } from './services/date-format.service';
-import { GastosDelMesComponent } from './gastos-del-mes/gastos-del-mes.component';
+import { MesService } from './services/mes.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { GastosDelMesComponent } from './gastos-del-mes/gastos-del-mes.component
     GastoRepositoryService,
     LoginService,
     RubroService,
-    DateFormatService
+    DateFormatService,
+    MesService
   ],
   bootstrap: [AppComponent]
 })
