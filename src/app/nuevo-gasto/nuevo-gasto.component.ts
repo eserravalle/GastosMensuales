@@ -24,7 +24,7 @@ export class NuevoGastoComponent implements OnInit {
     private loginService: LoginService,
     private dateFormatService: DateFormatService) {
 
-    this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "");
+    this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
     this.rubros = this.rubroService.getAllRubros();
     this.crearButtonEnabled = false;
   }
@@ -43,7 +43,7 @@ export class NuevoGastoComponent implements OnInit {
     if (resultado === true) {
       this.mesActual = this.model.fecha.substr(0, 7);
       this.gastoRepository.calcularGastoTotalDelMes(this.mesActual);
-      this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "");
+      this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
     }
   }
 }

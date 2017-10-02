@@ -15,11 +15,26 @@ export class TemplatesGastosComponent implements OnInit {
   templatesDeGastos: Array<Gasto>;
   model: Gasto;
   rubros: Array<string>;
+  title: string;
+  actualizando: boolean;
+  authenticatedButtonsEnabled : boolean;
 
   constructor(private gastoRepositoryService: GastoRepositoryService, private loginService: LoginService, private dateFormatService: DateFormatService, private rubroService: RubroService) {
     this.templatesDeGastos = new Array<Gasto>();
-    this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "");
+    this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
     this.rubros = this.rubroService.getAllRubros();
+    this.cambiarModoFormulario(false);
+    this.authenticatedButtonsEnabled = false;
+  }
+
+  private cambiarModoFormulario(estaActualizando: boolean) {
+    if (estaActualizando === true) {
+      this.title = "Actualice el Template: ";
+      this.actualizando = true;
+    } else {
+      this.title = "Ingrese Nuevo Template: ";
+      this.actualizando = false;
+    }
   }
 
   ngOnInit() {
@@ -27,6 +42,7 @@ export class TemplatesGastosComponent implements OnInit {
       if (value === true) {
         this.obtenerTemplatesDeGastos();
       }
+      this.authenticatedButtonsEnabled = value;
     });
   }
 
@@ -41,8 +57,35 @@ export class TemplatesGastosComponent implements OnInit {
   async crearTemplateDeGasto() {
     let resultado: boolean = await this.gastoRepositoryService.agregarTemplateDeGasto(this.model);
     if (resultado === true) {
-      this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "");
+      this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
       this.obtenerTemplatesDeGastos();
     }
+  }
+
+  async actualizarTemplateDeGasto() {
+    let resultado: boolean = await this.gastoRepositoryService.actualizarTemplateDeGastos(this.model);
+    if (resultado === true) {
+      this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
+      this.cambiarModoFormulario(false);
+      this.obtenerTemplatesDeGastos();
+    }
+  }
+
+  async eliminarTemplateDeGasto(template: Gasto) {
+    let resultado: boolean = await this.gastoRepositoryService.eliminarTemplateDeGasto(template);
+    if (resultado === true) {
+      this.obtenerTemplatesDeGastos();
+    }
+  }
+
+  recuperarTemplateDeGasto(template: Gasto) {
+    this.model = template;
+    this.cambiarModoFormulario(true);
+  }
+
+  cancelarTemplateDeGasto() {
+    this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
+    this.cambiarModoFormulario(false);
+    this.obtenerTemplatesDeGastos();
   }
 }

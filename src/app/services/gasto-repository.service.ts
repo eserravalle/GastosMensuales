@@ -26,6 +26,7 @@ export class GastoRepositoryService {
           notas: gasto.notas,
           id: newPost.key
       });
+      gasto.id = newPost.key;
 
       return true;
     }
@@ -67,7 +68,8 @@ export class GastoRepositoryService {
             childSnapshot.val().fecha,
             childSnapshot.val().rubro,
             childSnapshot.val().monto,
-            childSnapshot.val().notas
+            childSnapshot.val().notas,
+            childSnapshot.val().id
           );
           gastos.push(gasto);
           return false; // This means: keep iterating!
@@ -82,23 +84,54 @@ export class GastoRepositoryService {
     return this.listaDeGastosDelMes;
   }
 
-  async agregarTemplateDeGasto(gasto: Gasto): Promise<boolean> {
+  async agregarTemplateDeGasto(template: Gasto): Promise<boolean> {
     try {
       let dbRef = firebase.database().ref('templates/');
       let newPost = dbRef.push();
 
       await newPost.set({
-          fecha: gasto.fecha,
-          rubro: gasto.rubro,
-          monto: gasto.monto,
-          notas: gasto.notas,
+          fecha: template.fecha,
+          rubro: template.rubro,
+          monto: template.monto,
+          notas: template.notas,
           id: newPost.key
       });
+      template.id = newPost.key;
 
       return true;
     }
     catch (error) {
       alert(`${error.message} No ha podido crear el Template de Gasto. ¡Intente nuevamente!`)
+      return false;
+    }
+  }
+
+  async actualizarTemplateDeGastos(template: Gasto): Promise<boolean> {
+    try {
+      let dbRef = firebase.database().ref('templates/');
+      await dbRef.child(template.id).update({
+        rubro: template.rubro,
+        monto: template.monto,
+        notas: template.notas
+      });
+
+      return true;
+    }
+    catch (error) {
+      alert(`${error.message} No ha podido actualizar el Template de Gasto. ¡Intente nuevamente!`)
+      return false;
+    }
+  }
+
+  async eliminarTemplateDeGasto(template: Gasto): Promise<boolean> {
+    try {
+      let dbRef = firebase.database().ref('templates/');
+      await dbRef.child(template.id).remove();
+
+      return true;
+    }
+    catch (error) {
+      alert(`${error.message} No ha podido eliminar el Template de Gasto. ¡Intente nuevamente!`)
       return false;
     }
   }
@@ -115,7 +148,8 @@ export class GastoRepositoryService {
             childSnapshot.val().fecha,
             childSnapshot.val().rubro,
             childSnapshot.val().monto,
-            childSnapshot.val().notas
+            childSnapshot.val().notas,
+            childSnapshot.val().id
           );
           templatesGastos.push(template);
           return false; // This means: keep iterating!
