@@ -3,7 +3,7 @@
     <h3>Bienvenido a Gastos Mensuales!</h3>
   </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="!userLoggedIn">
   <div class="col-xs-12 col-md-4">
     <div class="form-group">
       <label for="username">Usuario</label>
@@ -11,7 +11,7 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="!userLoggedIn">
   <div class="col-xs-12 col-md-4">
     <div class="form-group">
       <label for="username">Contraseña</label>
