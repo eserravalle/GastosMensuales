@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Gasto } from '../model/gasto';
 import { GastoRepositoryService } from '../services/gasto-repository.service';
 import { LoginService } from '../services/login.service';
@@ -10,7 +10,7 @@ import { RubroService } from '../services/rubro.service';
   templateUrl: './templates-gastos.component.html',
   styleUrls: ['./templates-gastos.component.css']
 })
-export class TemplatesGastosComponent implements OnInit {
+export class TemplatesGastosComponent implements OnInit, OnDestroy {
 
   templatesDeGastos: Array<Gasto>;
   model: Gasto;
@@ -18,13 +18,30 @@ export class TemplatesGastosComponent implements OnInit {
   title: string;
   actualizando: boolean;
   authenticatedButtonsEnabled : boolean;
-
+  isAlive: boolean = true;
+  
   constructor(private gastoRepositoryService: GastoRepositoryService, private loginService: LoginService, private dateFormatService: DateFormatService, private rubroService: RubroService) {
     this.templatesDeGastos = new Array<Gasto>();
     this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
     this.rubros = this.rubroService.getAllRubros();
     this.cambiarModoFormulario(false);
     this.authenticatedButtonsEnabled = false;
+  }
+
+  ngOnInit() {
+    this.loginService.loggedIn.takeWhile(() => this.isAlive).subscribe((value) => {
+      if (value === true) {
+        this.obtenerTemplatesDeGastos();
+      } else {
+        this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
+        this.cambiarModoFormulario(false);
+      }
+      this.authenticatedButtonsEnabled = value;
+    });
+  }
+
+  ngOnDestroy() {
+    this.isAlive = false;
   }
 
   private cambiarModoFormulario(estaActualizando: boolean) {
@@ -35,18 +52,6 @@ export class TemplatesGastosComponent implements OnInit {
       this.title = "Ingrese Nuevo Template: ";
       this.actualizando = false;
     }
-  }
-
-  ngOnInit() {
-    this.loginService.loggedIn.subscribe((value) => {
-      if (value === true) {
-        this.obtenerTemplatesDeGastos();
-      } else {
-        this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
-        this.cambiarModoFormulario(false);
-      }
-      this.authenticatedButtonsEnabled = value;
-    });
   }
 
   obtenerTemplatesDeGastos() {

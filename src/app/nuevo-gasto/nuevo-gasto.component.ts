@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Gasto } from '../model/gasto';
 import { GastoRepositoryService } from '../services/gasto-repository.service';
 import { RubroService } from '../services/rubro.service';
@@ -10,14 +10,15 @@ import { DateFormatService } from '../services/date-format.service';
   templateUrl: './nuevo-gasto.component.html',
   styleUrls: ['./nuevo-gasto.component.css']
 })
-export class NuevoGastoComponent implements OnInit {
+export class NuevoGastoComponent implements OnInit, OnDestroy {
 
   model: Gasto;
   rubros: Array<string>;
   crearButtonEnabled: boolean;
   mesActual: string;
   totalDelMesActual: string;
-
+  isAlive: boolean = true;
+  
   constructor(
     private gastoRepository: GastoRepositoryService,
     private rubroService: RubroService,
@@ -30,12 +31,16 @@ export class NuevoGastoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginService.loggedIn.subscribe((value) => {
+    this.loginService.loggedIn.takeWhile(() => this.isAlive).subscribe((value) => {
       this.crearButtonEnabled = value;
     });
-    this.gastoRepository.montoTotalListo.subscribe((value) => {
+    this.gastoRepository.montoTotalListo.takeWhile(() => this.isAlive).subscribe((value) => {
       this.totalDelMesActual = value.toString();
     });
+  }
+
+  ngOnDestroy() {
+    this.isAlive = false;
   }
 
   async onSubmit() {

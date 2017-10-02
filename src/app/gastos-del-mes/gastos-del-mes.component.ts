@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Gasto } from '../model/gasto';
 import { GastoRepositoryService } from '../services/gasto-repository.service';
 import { LoginService } from '../services/login.service';
@@ -9,13 +9,14 @@ import { MesService } from '../services/mes.service';
   templateUrl: './gastos-del-mes.component.html',
   styleUrls: ['./gastos-del-mes.component.css']
 })
-export class GastosDelMesComponent implements OnInit {
+export class GastosDelMesComponent implements OnInit, OnDestroy {
 
   gastosDelMes: Array<Gasto>;
   totalDeGastosDelMes: number;
   meses: Array<string>;
   mes: string;
   consultarButtonEnabled: boolean;
+  isAlive: boolean = true;
 
   constructor(private gastoRepositoryService: GastoRepositoryService, private loginService: LoginService, private mesService: MesService) {
     this.gastosDelMes = new Array<Gasto>();
@@ -24,11 +25,15 @@ export class GastosDelMesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginService.loggedIn.subscribe((value) => {
+    this.loginService.loggedIn.takeWhile(() => this.isAlive).subscribe((value) => {
       this.consultarButtonEnabled = value;
     });
     this.meses = this.mesService.obtenerListaDeMeses();
     this.mes = this.meses[0];
+  }
+
+  ngOnDestroy() {
+    this.isAlive = false;
   }
 
   consultarGastosDelMes() {
