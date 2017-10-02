@@ -41,6 +41,9 @@ export class TemplatesGastosComponent implements OnInit {
     this.loginService.loggedIn.subscribe((value) => {
       if (value === true) {
         this.obtenerTemplatesDeGastos();
+      } else {
+        this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
+        this.cambiarModoFormulario(false);
       }
       this.authenticatedButtonsEnabled = value;
     });
@@ -87,5 +90,15 @@ export class TemplatesGastosComponent implements OnInit {
     this.model = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), "", 0, "", "");
     this.cambiarModoFormulario(false);
     this.obtenerTemplatesDeGastos();
+  }
+
+  async copiarTemplateAGasto(template: Gasto) {
+    let gasto = new Gasto(this.dateFormatService.getCurrentDateInYYYYMMDDFormat(), template.rubro, template.monto, template.notas, "");
+    let resultado: boolean = await this.gastoRepositoryService.agregarGasto(gasto);
+    if (resultado === true) {
+      alert('Gasto Creado');
+    } else {
+      alert('Error al crear el Gasto');
+    }
   }
 }
