@@ -1,0 +1,46 @@
+<form #nuevoTemplateForm="ngForm">
+  <h3>Ingrese Nuevo Template: </h3>
+  <div class="row">
+    <div class="col-xs-12 col-md-4">
+      <div class="form-group">
+        <label for="rubroGasto">Rubro</label>
+        <select class="form-control" id="rubroGasto" required [(ngModel)]="model.rubro" name="rubro">
+          <option *ngFor="let itemRubro of rubros" [value]="itemRubro">{{itemRubro}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-4">
+      <div class="form-group">
+        <label for="montoGasto">Monto</label>
+        <input type="number" class="form-control" id="montoGasto" required [(ngModel)]="model.monto" name="monto">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-4">
+      <div class="form-group">
+        <label for="notasGasto">Notas</label>
+        <input type="text" class="form-control" id="notasGasto" [(ngModel)]="model.notas" name="notas">
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-success" (click)="crearTemplateDeGasto()" [disabled]="!nuevoTemplateForm.form.valid">Crear</button>
+</form>
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <table class="table table-striped">
+      <tr>
+        <th>Rubro</th>
+        <th>Monto</th>
+        <th>Notas</th>
+      </tr>
+      <tr *ngFor="let template of templatesDeGastos">
+        <td>{{template.rubro}}</td>
+        <td>{{template.monto}}</td>
+        <td>{{template.notas}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

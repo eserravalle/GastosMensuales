@@ -8,6 +8,7 @@ export class GastoRepositoryService {
 
   montoTotalListo = new BehaviorSubject<number>(0);
   listaDeGastosDelMes = new Array<Gasto>();
+  listaDeTemplatesDeGastos = new Array<Gasto>();
 
   constructor() {
     this.montoTotalListo.next(0);
@@ -79,5 +80,53 @@ export class GastoRepositoryService {
       this
     );
     return this.listaDeGastosDelMes;
+  }
+
+  async agregarTemplateDeGasto(gasto: Gasto): Promise<boolean> {
+    try {
+      let dbRef = firebase.database().ref('templates/');
+      let newPost = dbRef.push();
+
+      await newPost.set({
+          fecha: gasto.fecha,
+          rubro: gasto.rubro,
+          monto: gasto.monto,
+          notas: gasto.notas,
+          id: newPost.key
+      });
+
+      return true;
+    }
+    catch (error) {
+      alert(`${error.message} No ha podido crear el Template de Gasto. ¡Intente nuevamente!`)
+      return false;
+    }
+  }
+
+  async obtenerTemplatesDeGastos(): Promise<Array<Gasto>> {
+    let dbRef = firebase.database().ref('templates/');
+    let query = dbRef.orderByKey();
+    await query.once(
+      'value',
+      function(snapshot) {
+        let templatesGastos: Array<Gasto> = new Array<Gasto>();
+        snapshot.forEach((childSnapshot): boolean => {
+          let template: Gasto = new Gasto(
+            childSnapshot.val().fecha,
+            childSnapshot.val().rubro,
+            childSnapshot.val().monto,
+            childSnapshot.val().notas
+          );
+          templatesGastos.push(template);
+          return false; // This means: keep iterating!
+        });
+        this.listaDeTemplatesDeGastos = templatesGastos;
+      },
+      function(error) {
+        this.listaDeTemplatesDeGastos =  new Array<Gasto>();
+      },
+      this
+    );
+    return this.listaDeTemplatesDeGastos;
   }
 }

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NuevoGastoComponent } from './nuevo-gasto/nuevo-gasto.component';
 import { LoginComponent } from './login/login.component';
 import { GastosDelMesComponent } from './gastos-del-mes/gastos-del-mes.component';
+import { TemplatesGastosComponent } from './templates-gastos/templates-gastos.component';
 
 import { GastoRepositoryService } from './services/gasto-repository.service';
 import { LoginService } from './services/login.service';
@@ -20,7 +21,8 @@ import { MesService } from './services/mes.service';
     AppComponent,
     NuevoGastoComponent,
     LoginComponent,
-    GastosDelMesComponent
+    GastosDelMesComponent,
+    TemplatesGastosComponent
   ],
   imports: [
     BrowserModule,
