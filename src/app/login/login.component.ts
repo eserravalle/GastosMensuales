@@ -19,6 +19,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.loginService.loggedIn) {
+      return;
+    }
+    
     this.loginService.loggedIn.subscribe((value) => {
       this.userLoggedIn = value;
       if (this.userLoggedIn) {
