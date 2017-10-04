@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginClick() {
-    this.loginService.login(this.username, this.password);
+    this.loginService.login(this.username.trim(), this.password);
   }
 
   onLogoutClick() {
