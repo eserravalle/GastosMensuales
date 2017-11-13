@@ -56,12 +56,12 @@ export class GastoRepositoryService {
     );
   }
 
-  async obtenerGastosDelMes(mes: string): Promise<Array<Gasto>> {
+  async obtenerGastosDelMes(mes: string, sortAscending: boolean = false): Promise<Array<Gasto>> {
     let dbRef = firebase.database().ref('gastos/' + mes);
     let query = dbRef.orderByChild('fecha');
     await query.once(
       'value',
-      function(snapshot) {
+      function(snapshot, sortAscending) {
         let gastos: Array<Gasto> = new Array<Gasto>();
         snapshot.forEach(function(childSnapshot) {
           let gasto: Gasto = new Gasto(
@@ -74,7 +74,20 @@ export class GastoRepositoryService {
           gastos.push(gasto);
           return false; // This means: keep iterating!
         });
-        this.listaDeGastosDelMes = gastos;
+        
+        if (sortAscending) {
+          this.listaDeGastosDelMes = gastos;
+        } else {
+          // This is needed because, as of November 11 2017,
+          // there is no way in firebase API to retrieve orderByChild descending
+          let gastosDesc: Array<Gasto> = new Array<Gasto>();
+          for(let i = gastos.length - 1; i >= 0; i--)
+          {
+            gastosDesc.push(gastos[i]);
+          }
+          this.listaDeGastosDelMes = gastosDesc;
+        }
+
       },
       function(error) {
         this.listaDeGastosDelMes = new Array<Gasto>();

@@ -37,7 +37,7 @@ export class GastosDelMesComponent implements OnInit, OnDestroy {
   }
 
   consultarGastosDelMes() {
-    this.gastoRepositoryService.obtenerGastosDelMes(this.mes)
+    this.gastoRepositoryService.obtenerGastosDelMes(this.mes, false)
     .then((gastos) => {
       this.gastosDelMes = gastos;
       let sumaDeGastosDelMes = 0;
