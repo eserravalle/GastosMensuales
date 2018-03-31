@@ -24,12 +24,16 @@
         <th>Rubro</th>
         <th>Monto</th>
         <th>Notas</th>
+        <th></th>
       </tr>
       <tr *ngFor="let gasto of gastosDelMes">
         <td>{{gasto.fecha}}</td>
         <td>{{gasto.rubro}}</td>
         <td>{{gasto.monto}}</td>
         <td>{{gasto.notas}}</td>
+        <td>
+          <button class="btn btn-xs btn-warning" (click)="recuperarGasto(gasto)">Upd</button>
+        </td>
       </tr>
     </table>
   </div>
