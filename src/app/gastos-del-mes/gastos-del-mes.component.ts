@@ -48,4 +48,14 @@ export class GastosDelMesComponent implements OnInit, OnDestroy {
     })
     .catch((error) => alert(`${error.message} No se han podido recuperar los Gastos del Mes. ¡Intente nuevamente!`));
   }
+
+  async eliminarGasto(gastoAEliminar: Gasto) {
+    if (confirm("¿Quiere eliminar el gasto en " + gastoAEliminar.rubro + ", por $" + gastoAEliminar.monto + "?"))
+    {
+      let resultado: boolean = await this.gastoRepositoryService.eliminarGasto(gastoAEliminar);
+      if (resultado === true) {
+        this.consultarGastosDelMes();
+      }
+    }
+  }
 }

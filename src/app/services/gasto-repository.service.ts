@@ -35,6 +35,19 @@ export class GastoRepositoryService {
       return false;
     }
   }
+  
+  async eliminarGasto(gastoAEliminar: Gasto): Promise<boolean> {
+    try {
+      let dbRef = firebase.database().ref('gastos/' + gastoAEliminar.fecha.substr(0, 7));
+      await dbRef.child(gastoAEliminar.id).remove();
+
+      return true;
+    }
+    catch (error) {
+      alert(`${error.message} No ha podido eliminar el Gasto. ¡Intente nuevamente!`)
+      return false;
+    }
+  }
 
   calcularGastoTotalDelMes(mes: string) {
     let dbRef = firebase.database().ref('gastos/' + mes);
@@ -57,6 +70,7 @@ export class GastoRepositoryService {
   }
 
   async obtenerGastosDelMes(mes: string, sortAscending: boolean = false): Promise<Array<Gasto>> {
+    this.montoTotalListo.next(0);
     let dbRef = firebase.database().ref('gastos/' + mes);
     let query = dbRef.orderByChild('fecha');
     await query.once(
