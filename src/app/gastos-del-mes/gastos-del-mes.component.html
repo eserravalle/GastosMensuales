@@ -21,16 +21,14 @@
     <table class="table table-striped">
       <tr>
         <th>Fecha</th>
-        <th>Rubro</th>
+        <th>Rubro<br/><i>Notas</i></th>
         <th>Monto</th>
-        <th>Notas</th>
         <th></th>
       </tr>
       <tr *ngFor="let gasto of gastosDelMes">
         <td>{{gasto.fecha}}</td>
-        <td>{{gasto.rubro}}</td>
+        <td>{{gasto.rubro}}<br/><i>{{gasto.notas}}</i></td>
         <td>{{gasto.monto}}</td>
-        <td>{{gasto.notas}}</td>
         <td>
           <button class="btn btn-xs btn-danger" (click)="eliminarGasto(gasto)">Del</button>
         </td>
