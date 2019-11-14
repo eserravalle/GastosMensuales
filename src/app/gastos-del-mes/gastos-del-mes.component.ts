@@ -1,3 +1,5 @@
+
+import { takeWhile } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Gasto } from '../model/gasto';
 import { GastoRepositoryService } from '../services/gasto-repository.service';
@@ -25,7 +27,7 @@ export class GastosDelMesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loginService.loggedIn.takeWhile(() => this.isAlive).subscribe((value) => {
+    this.loginService.loggedIn.pipe(takeWhile(() => this.isAlive)).subscribe((value) => {
       this.consultarButtonEnabled = value;
     });
     this.meses = this.mesService.obtenerListaDeMeses();
