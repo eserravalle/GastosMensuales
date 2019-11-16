@@ -30,7 +30,7 @@
     *ngIf="!actualizando">Crear</button>
   <button class="btn btn-success" (click)="actualizarTemplateDeGasto()" [disabled]="!nuevoTemplateForm.form.valid||!authenticatedButtonsEnabled"
     *ngIf="actualizando">Actualizar</button>
-  <button class="btn" (click)="cancelarTemplateDeGasto()" [disabled]="!authenticatedButtonsEnabled">Cancelar</button>
+  <button class="btn btn-danger" (click)="cancelarTemplateDeGasto()" [disabled]="!authenticatedButtonsEnabled">Cancelar</button>
 </form>
 <div class="row" *ngIf="authenticatedButtonsEnabled">
   <div class="col-xs-12 col-md-6">
