@@ -42,14 +42,12 @@
     <table class="table table-striped">
       <tr>
         <th>Rubro</th>
-        <th>Monto</th>
-        <th>Notas</th>
+        <th>Rubro<br/><i>Notas</i></th>
         <th></th>
       </tr>
       <tr *ngFor="let template of templatesDeGastos">
         <td>{{template.rubro}}</td>
-        <td>{{template.monto}}</td>
-        <td>{{template.notas}}</td>
+        <td>{{template.monto}}<br/><i>{{template.notas}}</i></td>
         <td>
           <button class="btn btn-xs btn-success" (click)="copiarTemplateAGasto(template)">Cpy</button>&nbsp;
           <button class="btn btn-xs btn-warning" (click)="recuperarTemplateDeGasto(template)">Upd</button>&nbsp;
