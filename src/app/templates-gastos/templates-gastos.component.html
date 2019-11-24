@@ -1,7 +1,7 @@
 <form #nuevoTemplateForm="ngForm">
   <h4>{{title}}</h4>
   <div class="row">
-    <div class="col-xs-12 col-md-4">
+    <div class="col-lg-12 col-xl-9">
       <div class="form-group">
         <label for="rubroGasto">Rubro</label>
         <select class="form-control" id="rubroGasto" required [(ngModel)]="model.rubro" name="rubro">
@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-md-4">
+    <div class="col-lg-12 col-xl-9">
       <div class="form-group">
         <label for="montoGasto">Monto</label>
         <input type="number" class="form-control" id="montoGasto" required [(ngModel)]="model.monto" name="monto">
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-md-4">
+    <div class="col-lg-12 col-xl-9">
       <div class="form-group">
         <label for="notasGasto">Notas</label>
         <input type="text" class="form-control" id="notasGasto" [(ngModel)]="model.notas" name="notas">
@@ -29,16 +29,16 @@
   <button class="btn btn-success" (click)="crearTemplateDeGasto()" [disabled]="!nuevoTemplateForm.form.valid||!authenticatedButtonsEnabled"
     *ngIf="!actualizando">Crear</button>
   <button class="btn btn-success" (click)="actualizarTemplateDeGasto()" [disabled]="!nuevoTemplateForm.form.valid||!authenticatedButtonsEnabled"
-    *ngIf="actualizando">Actualizar</button>
+    *ngIf="actualizando">Actualizar</button>&nbsp;
   <button class="btn btn-danger" (click)="cancelarTemplateDeGasto()" [disabled]="!authenticatedButtonsEnabled">Cancelar</button>
 </form>
 <div class="row" *ngIf="authenticatedButtonsEnabled">
-  <div class="col-xs-12 col-md-6">
+  <div class="col-lg-12 col-xl-9">
     <h4>Templates:</h4>
   </div>
 </div>
 <div class="row" *ngIf="authenticatedButtonsEnabled">
-  <div class="col-xs-12 col-md-6">
+  <div class="col-lg-12 col-xl-9">
     <table class="table table-striped">
       <tr>
         <th>Rubro</th>
@@ -51,8 +51,8 @@
         <td>{{template.monto}}</td>
         <td>{{template.notas}}</td>
         <td>
-          <button class="btn btn-xs btn-success" (click)="copiarTemplateAGasto(template)">Cpy</button>
-          <button class="btn btn-xs btn-warning" (click)="recuperarTemplateDeGasto(template)">Upd</button>
+          <button class="btn btn-xs btn-success" (click)="copiarTemplateAGasto(template)">Cpy</button>&nbsp;
+          <button class="btn btn-xs btn-warning" (click)="recuperarTemplateDeGasto(template)">Upd</button>&nbsp;
           <button class="btn btn-xs btn-danger" (click)="eliminarTemplateDeGasto(template)">Del</button>
         </td>
       </tr>
