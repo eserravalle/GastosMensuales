@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -14,7 +14,7 @@ import { LoginService } from './services/login.service';
 
 describe('AppComponent', () => {
   let mockLoginService;
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     mockLoginService = {};
     TestBed.configureTestingModule({
       providers: [
@@ -35,19 +35,19 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
-  it('should create the app', async(() => {
+  it('should create the app', waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title 'Gastos Mensuales'`, async(() => {
+  it(`should have as title 'Gastos Mensuales'`, waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('Gastos Mensuales');
   }));
 
-  it('should render title in a h1 tag', async(() => {
+  it('should render title in a h1 tag', waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
